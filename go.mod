@@ -26,3 +26,6 @@ require (
 	github.com/spf13/pflag v1.0.5 // indirect
 	go.uber.org/atomic v1.11.0 // indirect
 )
+
+// personal fork: tracking upstream wavetermdev/waveterm for local experimentation
+// upstream: https://github.com/wavetermdev/waveterm
