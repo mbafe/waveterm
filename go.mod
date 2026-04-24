@@ -29,3 +29,5 @@ require (
 
 // personal fork: tracking upstream wavetermdev/waveterm for local experimentation
 // upstream: https://github.com/wavetermdev/waveterm
+// note: pinning golang.org/x/crypto and golang.org/x/sys to current versions;
+//       bump these together when upstream does to avoid subtle mismatches.
