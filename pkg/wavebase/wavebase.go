@@ -18,6 +18,10 @@ const WaveTermVersion = "v0.1.0"
 const WaveTermDirName = ".waveterm"
 const WaveTermDevDirName = ".waveterm-dev"
 
+// dirPermissions defines the permission bits used when creating WaveTerm directories.
+// Using 0700 instead of 0755 to restrict access to the current user only.
+const dirPermissions = 0700
+
 var baseLock sync.Mutex
 var waveHomeDir string
 
@@ -103,7 +107,7 @@ func GetArch() string {
 func ensureDir(path string) error {
 	info, err := os.Stat(path)
 	if errors.Is(err, os.ErrNotExist) {
-		return os.MkdirAll(path, 0755)
+		return os.MkdirAll(path, dirPermissions)
 	}
 	if err != nil {
 		return err
