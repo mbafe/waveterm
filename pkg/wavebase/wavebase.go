@@ -20,6 +20,7 @@ const WaveTermDevDirName = ".waveterm-dev"
 
 // dirPermissions defines the permission bits used when creating WaveTerm directories.
 // Using 0700 instead of 0755 to restrict access to the current user only.
+// Note: on shared systems this is especially important to protect session data.
 const dirPermissions = 0700
 
 var baseLock sync.Mutex
@@ -34,11 +35,21 @@ func IsDevMode() bool {
 // GetWaveHomeDir returns the path to the WaveTerm home directory,
 // creating it if it does not exist. The directory is determined once
 // and cached for subsequent calls.
+// The home directory can be overridden by setting the WAVETERM_HOME environment variable.
 func GetWaveHomeDir() (string, error) {
 	baseLock.Lock()
 	defer baseLock.Unlock()
 
 	if waveHomeDir != "" {
+		return waveHomeDir, nil
+	}
+
+	// Allow overriding the wave home directory via environment variable.
+	if customDir := os.Getenv("WAVETERM_HOME"); customDir != "" {
+		if err := ensureDir(customDir); err != nil {
+			return "", fmt.Errorf("cannot create wave home directory %q: %w", customDir, err)
+		}
+		waveHomeDir = customDir
 		return waveHomeDir, nil
 	}
 
