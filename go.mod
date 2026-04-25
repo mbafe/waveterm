@@ -31,3 +31,6 @@ require (
 // upstream: https://github.com/wavetermdev/waveterm
 // note: pinning golang.org/x/crypto and golang.org/x/sys to current versions;
 //       bump these together when upstream does to avoid subtle mismatches.
+//
+// TODO(personal): investigate replacing gorilla/mux with net/http ServeMux
+//                 (available in Go 1.22) to reduce external dependencies.
